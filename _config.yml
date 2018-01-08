@@ -61,5 +61,4 @@ social_media:
 # hm.src = "//hm.baidu.com/hm.js?xxxxxxxxxxxx";
 # xxxxx字符串
 google_analytics_id: UA-112099286-1 # google 分析追踪id
-
-intensedebate_comments: true
+baidu_tongji_id: cf8506e0ef223e57ff6239944e5d46a4
