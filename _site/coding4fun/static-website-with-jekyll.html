@@ -952,8 +952,8 @@ This is a test: {{ xxx }}
 
       <!-- Gitment-->
 <div id="container"></div>
-<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
-<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
 <script>
 var gitment = new Gitment({
   id: '/coding4fun/static-website-with-jekyll.html', // 可选。默认为 location.href
@@ -965,6 +965,18 @@ var gitment = new Gitment({
   },
 })
 gitment.render('container')
+
+const gitalk = new Gitalk({
+  clientID: 'fa2a4fb9c7575272096d',
+  clientSecret: '1fb0ce52ec9115f92eecf22efae3ed117c46be4d',
+  repo: 'github.com/MaxSCUT/MaxSCUT.github.io',
+  owner: 'max',
+  admin: ['MaxSCUT'],
+  // facebook-like distraction free mode
+  distractionFreeMode: false
+})
+
+gitalk.render('gitalk-container')
 </script> 
     </div>
     
@@ -982,7 +994,7 @@ gitment.render('container')
 
     <footer class="footer">
   <div class="copyright">
-      Copyright &copy; <time datetime="2018-01-08T22:40:57+08:00">2018</time> <a href="http://localhost:4000">max</a> | Powered by <a href="https://github.com/jekyll/jekyll">Jekyll</a> | Designed by <a href="http://localhost:4000">max</a>
+      Copyright &copy; <time datetime="2018-01-08T22:48:46+08:00">2018</time> <a href="http://localhost:4000">max</a> | Powered by <a href="https://github.com/jekyll/jekyll">Jekyll</a> | Designed by <a href="http://localhost:4000">max</a>
   </div>
 </footer>
 
