@@ -14,10 +14,11 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 title: Max's Blog
+subtitle: God does not play dice.
 author: max
 email: maxwell.lau@live.com
 description: > # this means to ignore newlines until "baseurl:"
-  技术宅
+  技术宅|电子&软件爱好者
 url: https://maxscut.github.io/ # the base hostname & protocol for your site, e.g. http://example.com
 baseurl: "" # the subpath of your site, e.g. /blog
 
@@ -53,3 +54,12 @@ social_media:
 #   - vendor/cache/
 #   - vendor/gems/
 #   - vendor/ruby/
+
+
+# statistic analysis 统计代码
+# 百度统计 id，将统计代码替换为自己的百度统计id，即
+# hm.src = "//hm.baidu.com/hm.js?xxxxxxxxxxxx";
+# xxxxx字符串
+google_analytics_id: UA-112099286-1 # google 分析追踪id
+
+intensedebate_comments: true
