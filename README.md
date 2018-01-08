@@ -18,12 +18,12 @@ See [Demo](https://MaxSCUT.github.io/).
 
 * Index
 
-  ![index](https://github.com/lszero/zero-theme/blob/master/img/demo-index.png)
+  ![index](https://github.com/MaxSCUT/MaxSCUT.github.io/blob/master/img/demo-index.png)
 
 
 * Post - Table of Contents
 
-  ![Table of Contents](https://github.com/lszero/zero-theme/blob/master/img/demo-post.png)
+  ![Table of Contents](https://github.com/MaxSCUT/MaxSCUT.github.io/blob/master/img/demo-post.png)
 
 ## Usage
 
