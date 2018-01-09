@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <title>
+    
+      USB枚举过程分析 &middot; Max's Blog
+    
+  </title>
+
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="/assets/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="/assets/font-awesome/css/font-awesome.min.css">
+  <!-- My CSS -->
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="shortcut icon" href="/assets/img/favicon.ico" />
+  <!-- MathJax -->
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      TeX: {
+        equationNumbers: {
+          autoNumber: "AMS"
+        }
+      },
+      tex2jax: {
+        inlineMath: [ ['$','$'] ],
+        displayMath: [ ['$$','$$'] ],
+        processEscapes: true,
+      }
+    });
+  </script>
+  
+
+  <!-- code highlighting-->
+  <link rel="stylesheet" href="/lib/highlight/styles/hybrid.css">
+  <script src="/lib/highlight/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script>hljs.configure({ ignore: ['text'] });</script>
+  
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+</head>
+
+<body>
+    <header class="header">
+  <!-- Navigation -->
+  <nav class="navbar navbar-default .navbar-static-top">
+    <div class="container">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/" style="color:#333">Max's Blog</a>
+        <p class="navbar-text">God does not play dice.</p>
+      </div>
+
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav navbar-right">
+          <li class="nav-search">
+            <form class="navbar-form navbar-left" role="search" id="search-form">
+              <div class="input-group">
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="button" style="color:#777">Go!</button>
+                  </span>
+                  <input type="text" id="search-input" class="form-control" placeholder="Search">
+                  
+              </div>
+            </form>
+          </li>
+          <li>
+              <a href="/">Home</a>
+          </li>
+          <li>
+            <a href="/archives.html">Archives</a>
+          </li>
+          <li>
+            <a href="/categories.html">Categories</a>
+          </li>
+          <li>
+            <a href="/tags.html">Tags</a>
+          </li>
+          <li>
+            <a href="/about.html">About</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>
+
+  
+    <div class="container">
+  <div class="row-fluid main">
+    <div class="col-md-9 content">
+      <article class="post">
+        <h1 class="post-title">USB枚举过程分析</h1>
+
+        <div class="post-info">
+          <span class="post-date">21 Dec 2017</span>
+           | 
+            <span class="fa fa-folder-open" aria-hidden="true">
+            
+              <a class="post-categories" href="/categories.html#coding4fun">coding4fun</a>
+            
+            </span>
+          
+           | 
+            <span class="fa fa-tag" aria-hidden="true">
+            
+              <a class="post-tags" href="/tags.html#Embedded">Embedded</a>
+            
+              <a class="post-tags" href="/tags.html#Software">Software</a>
+            
+            </span>
+          
+        </div>
+
+        <hr>
+        <div class="post-content">
+          <p>软件:Keil4,STM32CubeMX,Device Monitoring Studio,Qt5.9;<br />
+硬件:USBSTM32(自制)
+<!-- more --></p>
+<h2 id="1usb设备的启动流程">1.USB设备的启动流程:</h2>
+<p>一旦有设备连接到主机,主机就会发送一系列Requests(请求)到设备所挂载的hub上面,hub收到请求之后,就会建立起一条连接Host(主机)和Device(设备)的通信通道,然后Host再以Controll Transfer(控制传输)的方式,通过端点0(Ep0)对设备发送各种请求,设备根据主机的请求回复对应的信息(这个过程称为枚举操作).因此,所有的USB设备都必须支持StandardRequests,ControlTransfer和Ep0,才能完成设备的枚举操作.详细的枚举过程参考<a href="http://blog.csdn.net/skyflying2012/article/details/41915475">blog</a>
+1.用户把USB设备插入USB端口;<br />
+2.Hub检测它各个端口数据线上(D+/D-)的电压.<br />
+3.Hub把新设备连接事件报告主机,主机发送Get_Port_Status请求给Hub,要求Hub报告改变的含义.<br />
+4.Hub根据电压来判断设<br />
+5.HUb发送Set_Port_Feature请求,通过数据线,把D+/D-全部拉低,持续10ms.以此来进行USB设备的复位.<br />
+6.Host检测所连接的全速设备是否支持高速模式.<br />
+7.Hub建立设备和主机之前的信息通道(此时,USB设备的默认地址和端点号均为0).<br />
+8.主机发送Get_Descriptor请求获得默认管道的最大包长度.<br />
+9.主机给设备分配一个地址.<br />
+10.主机获取设备的信息-10.1 设备描述符 10.2配置描述符 10.3 配置集合(配置描述符,接口描述符,断电描述符)</p>
+<h2 id="2修改由stm32cubemx生成的工程文件">2.修改由Stm32CubeMX生成的工程文件</h2>
+<h3 id="21-修改usbd_descc">2.1 修改usbd_desc.c</h3>
+<p>修改usbd_desc.c中的设备描述符USBD_HS_DeviceDesc</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>__ALIGN_BEGIN uint8_t USBD_HS_DeviceDesc[USB_LEN_DEV_DESC] __ALIGN_END =
+  {
+    0x12,                       /*bLength */
+    USB_DESC_TYPE_DEVICE,       /*bDescriptorType*/
+#if (USBD_LPM_ENABLED == 1)
+    0x01,                       /*bcdUSB */ /* changed to USB version 2.01 
+                                               in order to support LPM L1 suspend
+                                               resume test of USBCV3.0*/
+#else  
+    0x00,                       /* bcdUSB */
+#endif
+
+    0x02,
+    0x02,                        /*bDeviceClass*/
+    0x02,                       /*bDeviceSubClass*/
+    0x00,                       /*bDeviceProtocol*/
+    USB_MAX_EP0_SIZE,          /*bMaxPacketSize*/
+    LOBYTE(USBD_VID),           /*idVendor*/
+    HIBYTE(USBD_VID),           /*idVendor*/
+    LOBYTE(USBD_PID_HS),           /*idVendor*/
+    HIBYTE(USBD_PID_HS),           /*idVendor*/
+    0x00,                       /*bcdDevice rel. 2.00*/
+    0x02,
+    USBD_IDX_MFC_STR,           /*Index of manufacturer  string*/
+    USBD_IDX_PRODUCT_STR,       /*Index of product string*/
+    USBD_IDX_SERIAL_STR,        /*Index of serial number string*/
+    USBD_MAX_NUM_CONFIGURATION  /*bNumConfigurations*/
+  } ; 
+</code></pre></div></div>
+<p>修改为:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>__ALIGN_BEGIN uint8_t USBD_HS_DeviceDesc[USB_LEN_DEV_DESC] __ALIGN_END =
+  {
+    0x12,                       /*bLength */
+    USB_DESC_TYPE_DEVICE,       /*bDescriptorType*/
+#if (USBD_LPM_ENABLED == 1)
+    0x01,                       /*bcdUSB */ /* changed to USB version 2.01 
+                                               in order to support LPM L1 suspend
+                                               resume test of USBCV3.0*/
+#else  
+    0x00,                       /* bcdUSB */
+#endif
+
+    0x02,
+    0x00,                        /*bDeviceClass*/
+    0x00,                       /*bDeviceSubClass*/
+    0x00,                       /*bDeviceProtocol*/
+    USB_MAX_EP0_SIZE,          /*bMaxPacketSize*/
+    LOBYTE(USBD_VID),           /*idVendor*/
+    HIBYTE(USBD_VID),           /*idVendor*/
+    LOBYTE(USBD_PID_HS),           /*idVendor*/
+    HIBYTE(USBD_PID_HS),           /*idVendor*/
+    0x00,                       /*bcdDevice rel. 2.00*/
+    0x02,
+    USBD_IDX_MFC_STR,           /*Index of manufacturer  string*/
+    USBD_IDX_PRODUCT_STR,       /*Index of product string*/
+    USBD_IDX_SERIAL_STR,        /*Index of serial number string*/
+    USBD_MAX_NUM_CONFIGURATION  /*bNumConfigurations*/
+  } ; 
+</code></pre></div></div>
+<h3 id="22-修改usbd_cdcc">2.2 修改usbd_cdc.c</h3>
+<p>修改usbd_cdc.c里面的配置描述符USBD_CDC_CfgHSDesc,USBD_CDC_CfgFSDesc,USBD_CDC_OtherSpeedCfgDesc,并把USB_CDC_CONFIG_DESC_SIZ的长度改成32(按照实际)</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/* USB CDC device Configuration Descriptor */
+__ALIGN_BEGIN uint8_t USBD_CDC_CfgHSDesc[USB_CDC_CONFIG_DESC_SIZ] __ALIGN_END =
+{
+  /*Configuration Descriptor*/
+  0x09,   /* bLength: Configuration Descriptor size */
+  USB_DESC_TYPE_CONFIGURATION,      /* bDescriptorType: Configuration */
+  USB_CDC_CONFIG_DESC_SIZ,                /* wTotalLength:no of returned bytes */
+  0x00,
+  0x02,   /* bNumInterfaces: 2 interface */
+  0x01,   /* bConfigurationValue: Configuration value */
+  0x00,   /* iConfiguration: Index of string descriptor describing the configuration */
+  0xC0,   /* bmAttributes: self powered */
+  0x32,   /* MaxPower 0 mA */
+  
+  /*---------------------------------------------------------------------------*/
+  
+  /*Interface Descriptor */
+  0x09,   /* bLength: Interface Descriptor size */
+  USB_DESC_TYPE_INTERFACE,  /* bDescriptorType: Interface */
+  /* Interface descriptor type */
+  0x00,   /* bInterfaceNumber: Number of Interface */
+  0x00,   /* bAlternateSetting: Alternate setting */
+  0x01,   /* bNumEndpoints: One endpoints used */
+  0x02,   /* bInterfaceClass: Communication Interface Class */
+  0x02,   /* bInterfaceSubClass: Abstract Control Model */
+  0x01,   /* bInterfaceProtocol: Common AT commands */
+  0x00,   /* iInterface: */
+  
+  /*Header Functional Descriptor*/
+  0x05,   /* bLength: Endpoint Descriptor size */
+  0x24,   /* bDescriptorType: CS_INTERFACE */
+  0x00,   /* bDescriptorSubtype: Header Func Desc */
+  0x10,   /* bcdCDC: spec release number */
+  0x01,
+  
+  /*Call Management Functional Descriptor*/
+  0x05,   /* bFunctionLength */
+  0x24,   /* bDescriptorType: CS_INTERFACE */
+  0x01,   /* bDescriptorSubtype: Call Management Func Desc */
+  0x00,   /* bmCapabilities: D0+D1 */
+  0x01,   /* bDataInterface: 1 */
+  
+  /*ACM Functional Descriptor*/
+  0x04,   /* bFunctionLength */
+  0x24,   /* bDescriptorType: CS_INTERFACE */
+  0x02,   /* bDescriptorSubtype: Abstract Control Management desc */
+  0x02,   /* bmCapabilities */
+  
+  /*Union Functional Descriptor*/
+  0x05,   /* bFunctionLength */
+  0x24,   /* bDescriptorType: CS_INTERFACE */
+  0x06,   /* bDescriptorSubtype: Union func desc */
+  0x00,   /* bMasterInterface: Communication class interface */
+  0x01,   /* bSlaveInterface0: Data Class Interface */
+  
+  /*Endpoint 2 Descriptor*/
+  0x07,                           /* bLength: Endpoint Descriptor size */
+  USB_DESC_TYPE_ENDPOINT,   /* bDescriptorType: Endpoint */
+  CDC_CMD_EP,                     /* bEndpointAddress */
+  0x03,                           /* bmAttributes: Interrupt */
+  LOBYTE(CDC_CMD_PACKET_SIZE),     /* wMaxPacketSize: */
+  HIBYTE(CDC_CMD_PACKET_SIZE),
+  0x10,                           /* bInterval: */ 
+  /*---------------------------------------------------------------------------*/
+  
+  /*Data class interface descriptor*/
+  0x09,   /* bLength: Endpoint Descriptor size */
+  USB_DESC_TYPE_INTERFACE,  /* bDescriptorType: */
+  0x01,   /* bInterfaceNumber: Number of Interface */
+  0x00,   /* bAlternateSetting: Alternate setting */
+  0x02,   /* bNumEndpoints: Two endpoints used */
+  0x0A,   /* bInterfaceClass: CDC */
+  0x00,   /* bInterfaceSubClass: */
+  0x00,   /* bInterfaceProtocol: */
+  0x00,   /* iInterface: */
+  
+  /*Endpoint OUT Descriptor*/
+  0x07,   /* bLength: Endpoint Descriptor size */
+  USB_DESC_TYPE_ENDPOINT,      /* bDescriptorType: Endpoint */
+  CDC_OUT_EP,                        /* bEndpointAddress */
+  0x02,                              /* bmAttributes: Bulk */
+  LOBYTE(CDC_DATA_HS_MAX_PACKET_SIZE),  /* wMaxPacketSize: */
+  HIBYTE(CDC_DATA_HS_MAX_PACKET_SIZE),
+  0x00,                              /* bInterval: ignore for Bulk transfer */
+  
+  /*Endpoint IN Descriptor*/
+  0x07,   /* bLength: Endpoint Descriptor size */
+  USB_DESC_TYPE_ENDPOINT,      /* bDescriptorType: Endpoint */
+  CDC_IN_EP,                         /* bEndpointAddress */
+  0x02,                              /* bmAttributes: Bulk */
+  LOBYTE(CDC_DATA_HS_MAX_PACKET_SIZE),  /* wMaxPacketSize: */
+  HIBYTE(CDC_DATA_HS_MAX_PACKET_SIZE),
+  0x00                               /* bInterval: ignore for Bulk transfer */
+} ;
+/* USB CDC device Configuration Descriptor */
+__ALIGN_BEGIN uint8_t USBD_CDC_CfgFSDesc[USB_CDC_CONFIG_DESC_SIZ] __ALIGN_END =
+{
+  /*Configuration Descriptor*/
+  0x09,   /* bLength: Configuration Descriptor size */
+  USB_DESC_TYPE_CONFIGURATION,      /* bDescriptorType: Configuration */
+  USB_CDC_CONFIG_DESC_SIZ,                /* wTotalLength:no of returned bytes */
+  0x00,
+  0x02,   /* bNumInterfaces: 2 interface */
+  0x01,   /* bConfigurationValue: Configuration value */
+  0x00,   /* iConfiguration: Index of string descriptor describing the configuration */
+  0xC0,   /* bmAttributes: self powered */
+  0x32,   /* MaxPower 0 mA */
+  
+  /*---------------------------------------------------------------------------*/
+  
+  /*Interface Descriptor */
+  0x09,   /* bLength: Interface Descriptor size */
+  USB_DESC_TYPE_INTERFACE,  /* bDescriptorType: Interface */
+  /* Interface descriptor type */
+  0x00,   /* bInterfaceNumber: Number of Interface */
+  0x00,   /* bAlternateSetting: Alternate setting */
+  0x01,   /* bNumEndpoints: One endpoints used */
+  0x02,   /* bInterfaceClass: Communication Interface Class */
+  0x02,   /* bInterfaceSubClass: Abstract Control Model */
+  0x01,   /* bInterfaceProtocol: Common AT commands */
+  0x00,   /* iInterface: */
+  
+  /*Header Functional Descriptor*/
+  0x05,   /* bLength: Endpoint Descriptor size */
+  0x24,   /* bDescriptorType: CS_INTERFACE */
+  0x00,   /* bDescriptorSubtype: Header Func Desc */
+  0x10,   /* bcdCDC: spec release number */
+  0x01,
+  
+  /*Call Management Functional Descriptor*/
+  0x05,   /* bFunctionLength */
+  0x24,   /* bDescriptorType: CS_INTERFACE */
+  0x01,   /* bDescriptorSubtype: Call Management Func Desc */
+  0x00,   /* bmCapabilities: D0+D1 */
+  0x01,   /* bDataInterface: 1 */
+  
+  /*ACM Functional Descriptor*/
+  0x04,   /* bFunctionLength */
+  0x24,   /* bDescriptorType: CS_INTERFACE */
+  0x02,   /* bDescriptorSubtype: Abstract Control Management desc */
+  0x02,   /* bmCapabilities */
+  
+  /*Union Functional Descriptor*/
+  0x05,   /* bFunctionLength */
+  0x24,   /* bDescriptorType: CS_INTERFACE */
+  0x06,   /* bDescriptorSubtype: Union func desc */
+  0x00,   /* bMasterInterface: Communication class interface */
+  0x01,   /* bSlaveInterface0: Data Class Interface */
+  
+  /*Endpoint 2 Descriptor*/
+  0x07,                           /* bLength: Endpoint Descriptor size */
+  USB_DESC_TYPE_ENDPOINT,   /* bDescriptorType: Endpoint */
+  CDC_CMD_EP,                     /* bEndpointAddress */
+  0x03,                           /* bmAttributes: Interrupt */
+  LOBYTE(CDC_CMD_PACKET_SIZE),     /* wMaxPacketSize: */
+  HIBYTE(CDC_CMD_PACKET_SIZE),
+  0x10,                           /* bInterval: */ 
+  /*---------------------------------------------------------------------------*/
+  
+  /*Data class interface descriptor*/
+  0x09,   /* bLength: Endpoint Descriptor size */
+  USB_DESC_TYPE_INTERFACE,  /* bDescriptorType: */
+  0x01,   /* bInterfaceNumber: Number of Interface */
+  0x00,   /* bAlternateSetting: Alternate setting */
+  0x02,   /* bNumEndpoints: Two endpoints used */
+  0x0A,   /* bInterfaceClass: CDC */
+  0x00,   /* bInterfaceSubClass: */
+  0x00,   /* bInterfaceProtocol: */
+  0x00,   /* iInterface: */
+  
+  /*Endpoint OUT Descriptor*/
+  0x07,   /* bLength: Endpoint Descriptor size */
+  USB_DESC_TYPE_ENDPOINT,      /* bDescriptorType: Endpoint */
+  CDC_OUT_EP,                        /* bEndpointAddress */
+  0x02,                              /* bmAttributes: Bulk */
+  LOBYTE(CDC_DATA_FS_MAX_PACKET_SIZE),  /* wMaxPacketSize: */
+  HIBYTE(CDC_DATA_FS_MAX_PACKET_SIZE),
+  0x00,                              /* bInterval: ignore for Bulk transfer */
+  
+  /*Endpoint IN Descriptor*/
+  0x07,   /* bLength: Endpoint Descriptor size */
+  USB_DESC_TYPE_ENDPOINT,      /* bDescriptorType: Endpoint */
+  CDC_IN_EP,                         /* bEndpointAddress */
+  0x02,                              /* bmAttributes: Bulk */
+  LOBYTE(CDC_DATA_FS_MAX_PACKET_SIZE),  /* wMaxPacketSize: */
+  HIBYTE(CDC_DATA_FS_MAX_PACKET_SIZE),
+  0x00                               /* bInterval: ignore for Bulk transfer */
+} ;
+
+__ALIGN_BEGIN uint8_t USBD_CDC_OtherSpeedCfgDesc[USB_CDC_CONFIG_DESC_SIZ] __ALIGN_END =
+{ 
+  0x09,   /* bLength: Configuation Descriptor size */
+  USB_DESC_TYPE_OTHER_SPEED_CONFIGURATION,   
+  USB_CDC_CONFIG_DESC_SIZ,
+  0x00,
+  0x02,   /* bNumInterfaces: 2 interfaces */
+  0x01,   /* bConfigurationValue: */
+  0x04,   /* iConfiguration: */
+  0xC0,   /* bmAttributes: */
+  0x32,   /* MaxPower 100 mA */  
+  
+  /*Interface Descriptor */
+  0x09,   /* bLength: Interface Descriptor size */
+  USB_DESC_TYPE_INTERFACE,  /* bDescriptorType: Interface */
+  /* Interface descriptor type */
+  0x00,   /* bInterfaceNumber: Number of Interface */
+  0x00,   /* bAlternateSetting: Alternate setting */
+  0x01,   /* bNumEndpoints: One endpoints used */
+  0x02,   /* bInterfaceClass: Communication Interface Class */
+  0x02,   /* bInterfaceSubClass: Abstract Control Model */
+  0x01,   /* bInterfaceProtocol: Common AT commands */
+  0x00,   /* iInterface: */
+  
+  /*Header Functional Descriptor*/
+  0x05,   /* bLength: Endpoint Descriptor size */
+  0x24,   /* bDescriptorType: CS_INTERFACE */
+  0x00,   /* bDescriptorSubtype: Header Func Desc */
+  0x10,   /* bcdCDC: spec release number */
+  0x01,
+  
+  /*Call Management Functional Descriptor*/
+  0x05,   /* bFunctionLength */
+  0x24,   /* bDescriptorType: CS_INTERFACE */
+  0x01,   /* bDescriptorSubtype: Call Management Func Desc */
+  0x00,   /* bmCapabilities: D0+D1 */
+  0x01,   /* bDataInterface: 1 */
+  
+  /*ACM Functional Descriptor*/
+  0x04,   /* bFunctionLength */
+  0x24,   /* bDescriptorType: CS_INTERFACE */
+  0x02,   /* bDescriptorSubtype: Abstract Control Management desc */
+  0x02,   /* bmCapabilities */
+  
+  /*Union Functional Descriptor*/
+  0x05,   /* bFunctionLength */
+  0x24,   /* bDescriptorType: CS_INTERFACE */
+  0x06,   /* bDescriptorSubtype: Union func desc */
+  0x00,   /* bMasterInterface: Communication class interface */
+  0x01,   /* bSlaveInterface0: Data Class Interface */
+  
+  /*Endpoint 2 Descriptor*/
+  0x07,                           /* bLength: Endpoint Descriptor size */
+  USB_DESC_TYPE_ENDPOINT      ,   /* bDescriptorType: Endpoint */
+  CDC_CMD_EP,                     /* bEndpointAddress */
+  0x03,                           /* bmAttributes: Interrupt */
+  LOBYTE(CDC_CMD_PACKET_SIZE),     /* wMaxPacketSize: */
+  HIBYTE(CDC_CMD_PACKET_SIZE),
+  0xFF,                           /* bInterval: */
+  
+  /*---------------------------------------------------------------------------*/
+  
+  /*Data class interface descriptor*/
+  0x09,   /* bLength: Endpoint Descriptor size */
+  USB_DESC_TYPE_INTERFACE,  /* bDescriptorType: */
+  0x01,   /* bInterfaceNumber: Number of Interface */
+  0x00,   /* bAlternateSetting: Alternate setting */
+  0x02,   /* bNumEndpoints: Two endpoints used */
+  0x0A,   /* bInterfaceClass: CDC */
+  0x00,   /* bInterfaceSubClass: */
+  0x00,   /* bInterfaceProtocol: */
+  0x00,   /* iInterface: */
+  
+  /*Endpoint OUT Descriptor*/
+  0x07,   /* bLength: Endpoint Descriptor size */
+  USB_DESC_TYPE_ENDPOINT,      /* bDescriptorType: Endpoint */
+  CDC_OUT_EP,                        /* bEndpointAddress */
+  0x02,                              /* bmAttributes: Bulk */
+  0x40,                              /* wMaxPacketSize: */
+  0x00,
+  0x00,                              /* bInterval: ignore for Bulk transfer */
+  
+  /*Endpoint IN Descriptor*/
+  0x07,   /* bLength: Endpoint Descriptor size */
+  USB_DESC_TYPE_ENDPOINT,     /* bDescriptorType: Endpoint */
+  CDC_IN_EP,                        /* bEndpointAddress */
+  0x02,                             /* bmAttributes: Bulk */
+  0x40,                             /* wMaxPacketSize: */
+  0x00,
+  0x00                              /* bInterval */
+};
+</code></pre></div></div>
+<p>修改为:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/* USB CDC device Configuration Descriptor */
+__ALIGN_BEGIN uint8_t USBD_CDC_CfgHSDesc[USB_CDC_CONFIG_DESC_SIZ] __ALIGN_END =
+{
+  /*Configuration Descriptor*/
+  0x09,   /* bLength: Configuration Descriptor size */
+  USB_DESC_TYPE_CONFIGURATION,      /* bDescriptorType: Configuration */
+  USB_CDC_CONFIG_DESC_SIZ,                /* wTotalLength:no of returned bytes */
+  0x00,
+  0x01,   /* bNumInterfaces: 1 interface */
+  0x01,   /* bConfigurationValue: Configuration value */
+  0x00,   /* iConfiguration: Index of string descriptor describing the configuration */
+  0xE0,   /* bmAttributes: self powered */
+  0xFA,   /* MaxPower 500 mA */
+  
+  /*---------------------------------------------------------------------------*/
+  
+  /*Interface Descriptor */ //接口描述符
+  0x09,   /* bLength: Interface Descriptor size */
+  USB_DESC_TYPE_INTERFACE,  /* bDescriptorType: Interface */
+  /* Interface descriptor type */
+  0x00,   /* bInterfaceNumber: Number of Interface */
+  0x00,   /* bAlternateSetting: Alternate setting */
+  0x02,   /* bNumEndpoints: One endpoints used */
+  0xDC,   /* bInterfaceClass: Communication Interface Class */
+  0xA0,   /* bInterfaceSubClass: Abstract Control Model */
+  0xB0,   /* bInterfaceProtocol: Common AT commands */
+  0x00,   /* iInterface: */
+  
+  /*Endpoint OUT Descriptor*/ //端点描述符
+  0x07,   /* bLength: Endpoint Descriptor size */
+  USB_DESC_TYPE_ENDPOINT,      /* bDescriptorType: Endpoint */
+  CDC_OUT_EP,                        /* bEndpointAddress */
+  0x02,                              /* bmAttributes: Bulk */
+  LOBYTE(CDC_DATA_HS_MAX_PACKET_SIZE),  /* wMaxPacketSize: */
+  HIBYTE(CDC_DATA_HS_MAX_PACKET_SIZE),
+  0x00,                              /* bInterval: ignore for Bulk transfer */
+  
+  /*Endpoint IN Descriptor*/
+  0x07,   /* bLength: Endpoint Descriptor size */
+  USB_DESC_TYPE_ENDPOINT,      /* bDescriptorType: Endpoint */
+  CDC_IN_EP,                         /* bEndpointAddress */
+  0x02,                              /* bmAttributes: Bulk */
+  LOBYTE(CDC_DATA_HS_MAX_PACKET_SIZE),  /* wMaxPacketSize: */
+  HIBYTE(CDC_DATA_HS_MAX_PACKET_SIZE),
+  0x00                               /* bInterval: ignore for Bulk transfer */
+} ;
+</code></pre></div></div>
+<h3 id="23-修改其他配置符-在cubemx里面配置这里无须再配置详见-cubemxdevice-descriptor">2.3 修改其他配置符-在CubeMx里面配置,这里无须再配置,详见-&gt;[CubeMx]Device Descriptor</h3>
+<h3 id="24-根据端点缓冲区大小配置端点缓冲地址-在cubemx里面配置这里无需再配">2.4 根据端点缓冲区大小配置端点缓冲地址-在CubeMx里面配置,这里无需再配</h3>
+<h3 id="25-用device-monitoring-studio查看设备描述符和配置描述符信息是否正确了">2.5 用Device Monitoring Studio查看设备描述符和配置描述符信息是否正确了.</h3>
+<h3 id="26-编程与设备进行通讯">2.6 编程,与设备进行通讯</h3>
+
+        </div>
+        <br><br>
+      </article>
+
+      <nav class="post-pagination">
+        
+        <a href="/coding4fun/RealTime-Test-on-Ubuntu.html" class="btn previous" title="Linux下的USB实时性测试(1)--配置上位机系统">&larr; Linux下的USB实时性测试(1)--配置上位机系统</a>
+        
+        
+      </nav>
+
+      <hr>
+
+      
+      <aside class="related">
+        <h3>Related Posts</h3>
+        <ul class="related-posts">
+          
+            <li>
+              <a href="/coding4fun/RealTime-Test-on-Ubuntu.html">
+                Linux下的USB实时性测试(1)--配置上位机系统
+                <small><time datetime="2017-12-18T19:29:00+08:00">18 Dec 2017</time></small>
+              </a>
+            </li>
+          
+            <li>
+              <a href="/coding4fun/static-website-with-jekyll.html">
+                从WordPress到静态网站
+                <small><time datetime="2017-08-01T20:00:00+08:00">01 Aug 2017</time></small>
+              </a>
+            </li>
+          
+        </ul>
+      </aside>
+      
+
+      <!-- Gitment
+<div id="container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script>
+const gitalk = new Gitalk({
+  clientID: 'fa2a4fb9c7575272096d',
+  clientSecret: '1fb0ce52ec9115f92eecf22efae3ed117c46be4d',
+  repo: 'github.com/MaxSCUT/MaxSCUT.github.io',
+  owner: 'max',
+  admin: ['MaxSCUT'],
+  // facebook-like distraction free mode
+  distractionFreeMode: false
+})
+
+gitalk.render('gitalk-container')
+</script> -->
+
+
+<link rel="stylesheet" href="/assets/comment/comment.css">
+<script src="/assets/comment/comment.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+const comment = new Gitalk({
+  clientID: 'fa2a4fb9c7575272096d',
+  clientSecret: '1fb0ce52ec9115f92eecf22efae3ed117c46be4d',
+  repo: 'MaxSCUT.github.io',
+  owner: 'MaxSCUT',
+  admin: ['MaxSCUT'],
+  id: '/coding4fun/USB-enumeration-process',
+  labels: ['comments'],
+  distractionFreeMode: true
+})
+comment.render('gitalk-container')
+</script>
+
+    </div>
+    
+    <div class="col-md-3 post-sidebar">
+      <div class="sidebar-content" id="sidebar">
+  <nav class="header-list-sidebar">
+    <ul id="sideNav" class="nav headers-sidenav">
+        <!-- code will be generated in TOC.js -->
+    </ul>
+  </nav>
+</div>
+    </div>
+  </div>
+</div>
+
+    <footer class="footer">
+  <div class="copyright">
+      Copyright &copy; <time datetime="2018-01-09T13:26:03+08:00">2018</time> <a href="http://localhost:4000">Max</a> | Powered by <a href="https://github.com/jekyll/jekyll">Jekyll</a> | Designed by <a href="https://github.com/lszero/zero-theme">lszero</a>
+  </div>
+  
+<script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?dbdedd23e954650889f7af1def360c51";
+    var s = document.getElementsByTagName("script")[0]; 
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-112099286-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-112099286-1');
+</script>
+
+</footer>
+
+    <a href="#top" class="back-to-top">^</a>
+
+<!--      -->
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="/assets/js/jquery-1.12.4.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="/assets/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <!-- TOC -->
+    <script src="/assets/js/toc/TOC.js"></script>
+
+    <script>$("#search-form").submit(function(event){
+      var query = document.getElementById("search-input").value;
+      window.open("http://google.com/search?q=" + query + "%20site:" + "MaxSCUT.github.io");
+    });</script>
+  </body>
+</html>

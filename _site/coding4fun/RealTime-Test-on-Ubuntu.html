@@ -130,9 +130,13 @@
 
         <hr>
         <div class="post-content">
-          <h1 id="0cyclictest工具介绍">0.Cyclictest工具介绍</h1>
+          <p>系统:Windows10<br />
+软件:VMWare<br />
+测试系统:Ubuntu<br />
+<!-- more --></p>
+<h1 id="0cyclictest工具介绍">0.Cyclictest工具介绍</h1>
 <h2 id="00-cyclictest简介">0.0 cyclictest简介</h2>
-<p>cyclictest是一个高精度（us级别）的系统实时性测试程序(<a href="https://rt.wiki.kernel.org/index.php/Cyclictest">维基主页地址</a>) 。该工具是rt-tests下使用最为广泛的测试工具，一般用来进行内核的延迟，从而判断内核的实时性能。一般来说，在Ubuntu下面可以容易地通过<code class="highlighter-rouge">$ apt-get install rt-tests</code>,从而获得该测试工具。也可以git 该程序的<a href="git://git.kernel.org/pub/scm/linux/kernel/git/clrkwllms/rt-tests.git">源代码</a>到本地进行编译。<!-- more --></p>
+<p>cyclictest是一个高精度（us级别）的系统实时性测试程序(<a href="https://rt.wiki.kernel.org/index.php/Cyclictest">维基主页地址</a>) 。该工具是rt-tests下使用最为广泛的测试工具，一般用来进行内核的延迟，从而判断内核的实时性能。一般来说，在Ubuntu下面可以容易地通过<code class="highlighter-rouge">$ apt-get install rt-tests</code>,从而获得该测试工具。也可以git 该程序的<a href="git://git.kernel.org/pub/scm/linux/kernel/git/clrkwllms/rt-tests.git">源代码</a>到本地进行编译。</p>
 <h2 id="01-git仓库源码安装">0.1 git仓库源码安装</h2>
 <p>首先机器必须要有git，通过<code class="highlighter-rouge">$ sudo apt-get install git</code>进行安装。具体的代码安装步骤如下：</p>
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ git clone git://git.kernel.org/pub/scm/linux/kernel/git/clrkwllms/rt-tests.git//拷贝
@@ -369,6 +373,8 @@ $ sudo cyclictest -p 90 - m -c 0 -i 200 -n -h 100 -q -l 100000
         <a href="/coding4fun/static-website-with-jekyll.html" class="btn previous" title="从WordPress到静态网站">&larr; 从WordPress到静态网站</a>
         
         
+        <a href="/coding4fun/USB-enumeration-process.html" class="btn next" title="USB枚举过程分析">USB枚举过程分析 &rarr;</a>
+        
       </nav>
 
       <hr>
@@ -377,6 +383,13 @@ $ sudo cyclictest -p 90 - m -c 0 -i 200 -n -h 100 -q -l 100000
       <aside class="related">
         <h3>Related Posts</h3>
         <ul class="related-posts">
+          
+            <li>
+              <a href="/coding4fun/USB-enumeration-process.html">
+                USB枚举过程分析
+                <small><time datetime="2017-12-21T19:29:00+08:00">21 Dec 2017</time></small>
+              </a>
+            </li>
           
             <li>
               <a href="/coding4fun/static-website-with-jekyll.html">
@@ -443,7 +456,7 @@ comment.render('gitalk-container')
 
     <footer class="footer">
   <div class="copyright">
-      Copyright &copy; <time datetime="2018-01-09T12:20:41+08:00">2018</time> <a href="http://localhost:4000">Max</a> | Powered by <a href="https://github.com/jekyll/jekyll">Jekyll</a> | Designed by <a href="https://github.com/lszero/zero-theme">lszero</a>
+      Copyright &copy; <time datetime="2018-01-09T13:26:03+08:00">2018</time> <a href="http://localhost:4000">Max</a> | Powered by <a href="https://github.com/jekyll/jekyll">Jekyll</a> | Designed by <a href="https://github.com/lszero/zero-theme">lszero</a>
   </div>
   
 <script>
