@@ -8,7 +8,7 @@
   <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
   <title>
     
-      Max's Blog &middot; 
+      Max's Blog &middot; 博学之明辨之
     
   </title>
 
@@ -106,7 +106,168 @@
   <div class="row-fluid main">
     <div class="col-md-9 content main-posts-preview">
       
+      <article class="post-preview">
+        <h1 class="post-title">
+          <a href="/coding4fun/comments-with-isso.html">搭建Isso评论服务</a>
+        </h1>
 
+        <div class="post-info">
+          <span class="post-date">09 Aug 2017</span>
+           | 
+            <span class="fa fa-folder-open" aria-hidden="true">
+            
+              <a class="post-categories" href="/categories.html#coding4fun">coding4fun</a>
+            
+            </span>
+          
+           | 
+            <span class="fa fa-tag" aria-hidden="true">
+            
+              <a class="post-tags" href="/tags.html#jekyll">jekyll</a>
+            
+              <a class="post-tags" href="/tags.html#blog">blog</a>
+            
+            </span>
+          
+        </div>
+
+        <div class="post-excerpt">
+          <p>与其借助第三方服务天天担心挂，还不如将自己的服务器资源利用起来。<a href="https://posativ.org/isso/">Isso</a>就是自建评论系统的一种方式。（官网需要fq.）</p>
+
+<h2 id="install-isso">Install Isso</h2>
+
+<p>测试自Ubuntu服务器。本来官网文档里没那么多戏，但是我一直报错。。又安了很多其它包。</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ sudo apt-get install python3-dev
+$ sudo pip install isso
+$ sudo apt-get install sqlite3
+
+# 可能需要：
+$ sudo pip install werkzeug
+$ sudo apt-get install libffi-dev
+$ sudo pip install misaka
+</code></pre></div></div>
+
+
+        </div>
+
+        <div class="post-readmore">
+          <a class="read-more" href="/coding4fun/comments-with-isso.html">Read More</a>
+        </div>
+      </article>
+      <hr />
+      
+      <article class="post-preview">
+        <h1 class="post-title">
+          <a href="/coding4fun/multisite-setting.html">利用Apache进行多站点配置</a>
+        </h1>
+
+        <div class="post-info">
+          <span class="post-date">08 Aug 2017</span>
+           | 
+            <span class="fa fa-folder-open" aria-hidden="true">
+            
+              <a class="post-categories" href="/categories.html#coding4fun">coding4fun</a>
+            
+            </span>
+          
+           | 
+            <span class="fa fa-tag" aria-hidden="true">
+            
+              <a class="post-tags" href="/tags.html#jekyll">jekyll</a>
+            
+              <a class="post-tags" href="/tags.html#blog">blog</a>
+            
+              <a class="post-tags" href="/tags.html#multisites">multisites</a>
+            
+            </span>
+          
+        </div>
+
+        <div class="post-excerpt">
+          <p>用了静态网页之后，主机就空闲了，当初辛辛苦苦跟工信部折腾了好几个月连案都备好了。。总感觉特别亏（其实就是舍不得wordpress的搜索功能。。）转念一想，拿wp当图片上传服务也是不错啊，这样就省去找第三方图床了。</p>
+
+<p>我的目标：</p>
+
+<ul>
+  <li>www.lszero.com 显示主页面。</li>
+  <li>blog.lszero.com 对应静态site。</li>
+  <li>wp.lszero.com 对应wordpress。</li>
+</ul>
+
+<p>我这里用的是apache来实现的，也可以用nginx。</p>
+
+<p>因为我的测试平台是Ubuntu，故跟网上的配置文件有些不一样。如网上说的apache配置文件<code class="highlighter-rouge">http.conf</code>，在我的平台下是<code class="highlighter-rouge">/etc/apache2/apache2.conf</code>。</p>
+
+
+        </div>
+
+        <div class="post-readmore">
+          <a class="read-more" href="/coding4fun/multisite-setting.html">Read More</a>
+        </div>
+      </article>
+      <hr />
+      
+      <article class="post-preview">
+        <h1 class="post-title">
+          <a href="/coding4fun/static-website-with-jekyll.html">从WordPress到静态网站</a>
+        </h1>
+
+        <div class="post-info">
+          <span class="post-date">01 Aug 2017</span>
+           | 
+            <span class="fa fa-folder-open" aria-hidden="true">
+            
+              <a class="post-categories" href="/categories.html#coding4fun">coding4fun</a>
+            
+            </span>
+          
+           | 
+            <span class="fa fa-tag" aria-hidden="true">
+            
+              <a class="post-tags" href="/tags.html#github">github</a>
+            
+              <a class="post-tags" href="/tags.html#jekyll">jekyll</a>
+            
+              <a class="post-tags" href="/tags.html#bootstrap">bootstrap</a>
+            
+            </span>
+          
+        </div>
+
+        <div class="post-excerpt">
+          <p>作为一个极简主义者，越来越受不了WordPress的臃肿。主要自己平时都是用Markdown来做记录，而WordPress支持的不是很好，另外有时写的md长文通过三方软件导出的html也不造放在wp的什么地方才合适，管理起来还不如几个静态页面来得方便。于是有了某天来个大整顿的想法。</p>
+
+<p>对前端只停留在css的我，花了整三天时间，从Hexo到Jekyll再到Bootstrap，以及各种markdown2html解析器…最后基本算是从头写了一个基于Jekyll的website theme 😓  在此记录了各种前端坑，自认为还算详细吧。</p>
+
+
+        </div>
+
+        <div class="post-readmore">
+          <a class="read-more" href="/coding4fun/static-website-with-jekyll.html">Read More</a>
+        </div>
+      </article>
+      <hr />
+      
+
+      
+      <nav aria-label="Page navigation">
+        <ul class="pagination">
+          
+            <li><span>&laquo;</span></li>
+          
+
+          
+            
+              <li class="active"><a>1</a></li>
+            
+          
+
+          
+            <li><span>&raquo;</span></li>
+          
+        </ul>
+      </nav>
       
     </div>
 
@@ -218,7 +379,7 @@
 
     <footer class="footer">
   <div class="copyright">
-      Copyright &copy; <time datetime="2018-01-09T01:20:45+08:00">2018</time> <a href="http://localhost:4000">max</a> | Powered by <a href="https://github.com/jekyll/jekyll">Jekyll</a> | Designed by <a href="https://github.com/lszero/zero-theme">lszero</a>
+      Copyright &copy; <time datetime="2018-01-09T10:50:50+08:00">2018</time> <a href="http://localhost:4000">max</a> | Powered by <a href="https://github.com/jekyll/jekyll">Jekyll</a> | Designed by <a href="https://github.com/lszero/zero-theme">lszero</a>
   </div>
   
 <script>
