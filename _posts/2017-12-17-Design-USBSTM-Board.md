@@ -8,7 +8,7 @@ tags: [STM32,USB,Hardware]
 软件:Altium Designer 18  
 主要芯片:STM32F407,USB3300  
 <!-- more -->
-![usbstm](https://user-images.githubusercontent.com/2595085/34708921-f56d7706-f54f-11e7-8b79-1fcfb7c51910.png)
+![usbstm](https://user-images.githubusercontent.com/2595085/34708921-f56d7706-f54f-11e7-8b79-1fcfb7c51910.png){:height="70%" width="70%"}  
 
 
 

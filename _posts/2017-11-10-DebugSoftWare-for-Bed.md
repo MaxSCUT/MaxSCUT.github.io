@@ -12,17 +12,17 @@ tags: [Qt,Sketch,Software]
 
 看了很久的dribble大神的作品,终于有机会自己从UI设计开始一款软件了.这个软件的作用就是和下位机通讯,然后控制层叠起来的床垫机,取出和放入床垫.主要用在商场等场合.  
 软件登陆界面:  
-![login](https://user-images.githubusercontent.com/2595085/34712703-b5cffd9e-f55e-11e7-86b3-cbfad310bda2.jpg)
+![login](https://user-images.githubusercontent.com/2595085/34712703-b5cffd9e-f55e-11e7-86b3-cbfad310bda2.jpg){:height="70%" width="70%"}  
 电子开关控制界面:  
-![switch](https://user-images.githubusercontent.com/2595085/34712701-b59f3dee-f55e-11e7-9964-938bc2448ba7.png)
+![switch](https://user-images.githubusercontent.com/2595085/34712701-b59f3dee-f55e-11e7-9964-938bc2448ba7.png){:height="70%" width="70%"}  
 电机控制界面:  
-![motor](https://user-images.githubusercontent.com/2595085/34712704-b60007dc-f55e-11e7-8457-47e5adbd83ed.png)
+![motor](https://user-images.githubusercontent.com/2595085/34712704-b60007dc-f55e-11e7-8457-47e5adbd83ed.png){:height="70%" width="70%"}  
 层高设置界面:  
-![layerheight](https://user-images.githubusercontent.com/2595085/34712705-b6326baa-f55e-11e7-895a-6bb25d1507be.png)
+![layerheight](https://user-images.githubusercontent.com/2595085/34712705-b6326baa-f55e-11e7-895a-6bb25d1507be.png){:height="70%" width="70%"}  
 门挡高度设置界面:  
-![doorheight](https://user-images.githubusercontent.com/2595085/34712706-b662eb22-f55e-11e7-9314-3f738869b9f5.png)
+![doorheight](https://user-images.githubusercontent.com/2595085/34712706-b662eb22-f55e-11e7-9314-3f738869b9f5.png){:height="70%" width="70%"}  
 出入库控制界面:  
-![store](https://user-images.githubusercontent.com/2595085/34712709-b697a57e-f55e-11e7-927c-5896366a7e3e.png)
+![store](https://user-images.githubusercontent.com/2595085/34712709-b697a57e-f55e-11e7-927c-5896366a7e3e.png){:height="70%" width="70%"}  
 
 
 参考资料:  
