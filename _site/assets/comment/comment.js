@@ -10039,7 +10039,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;//     (c) 2012 
 /***/ (function(module, exports) {
 
 module.exports = {
-	"init": "Gitalk 加载中 ...",
+	"init": "评论正在加载中,请耐心等候 ...",
 	"no-found-related": "未找到相关的 %{link} 进行评论",
 	"please-contact": "请联系 %{user} 初始化创建",
 	"init-issue": "初始化 Issue",
@@ -10063,7 +10063,7 @@ module.exports = {
 /***/ (function(module, exports) {
 
 module.exports = {
-	"init": "Gitalk 加載中 ...",
+	"init": "评论正在加載中 ...",
 	"no-found-related": "未找到相關的 %{link} 進行評論",
 	"please-contact": "請聯系 %{user} 初始化創建",
 	"init-issue": "初始化 Issue",
@@ -10087,7 +10087,7 @@ module.exports = {
 /***/ (function(module, exports) {
 
 module.exports = {
-	"init": "Gitalking ...",
+	"init": "Comment is loading ...",
 	"no-found-related": "Related %{link} not found",
 	"please-contact": "Please contact %{user} to initialize the comment",
 	"init-issue": "Init Issue",
@@ -10111,7 +10111,7 @@ module.exports = {
 /***/ (function(module, exports) {
 
 module.exports = {
-	"init": "Gitalking ...",
+	"init": "Comment is loading ...",
 	"no-found-related": "Link %{link} no encontrado",
 	"please-contact": "Por favor contacta con %{user} para inicializar el comentario",
 	"init-issue": "Iniciar Issue",
