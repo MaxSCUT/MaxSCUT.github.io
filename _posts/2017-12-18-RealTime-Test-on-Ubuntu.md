@@ -8,7 +8,7 @@ tags: [Linux, Software]
 
 # 0.Cyclictest工具介绍
 ## 0.0 cyclictest简介
-cyclictest是一个高精度（us级别）的系统实时性测试程序([维基主页地址](https://rt.wiki.kernel.org/index.php/Cyclictest)) 。该工具是rt-tests下使用最为广泛的测试工具，一般用来进行内核的延迟，从而判断内核的实时性能。一般来说，在Ubuntu下面可以容易地通过`$ apt-get install rt-tests`,从而获得该测试工具。也可以git 该程序的[源代码](git://git.kernel.org/pub/scm/linux/kernel/git/clrkwllms/rt-tests.git)到本地进行编译。
+cyclictest是一个高精度（us级别）的系统实时性测试程序([维基主页地址](https://rt.wiki.kernel.org/index.php/Cyclictest)) 。该工具是rt-tests下使用最为广泛的测试工具，一般用来进行内核的延迟，从而判断内核的实时性能。一般来说，在Ubuntu下面可以容易地通过`$ apt-get install rt-tests`,从而获得该测试工具。也可以git 该程序的[源代码](git://git.kernel.org/pub/scm/linux/kernel/git/clrkwllms/rt-tests.git)到本地进行编译。<!-- more -->
 ## 0.1 git仓库源码安装
 首先机器必须要有git，通过`$ sudo apt-get install git`进行安装。具体的代码安装步骤如下：
 ~~~
