@@ -17,13 +17,13 @@ gitalk.render('gitalk-container')
 </script> -->
 
 
-<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
-<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<link rel="stylesheet" href="/assets/comment/comment.css">
+<script src="/assets/comment/comment.min.js"></script>
 
 <div id="gitalk-container"></div>
 
 <script>
-const gitalk = new Gitalk({
+const comment = new Gitalk({
   clientID: 'fa2a4fb9c7575272096d',
   clientSecret: '1fb0ce52ec9115f92eecf22efae3ed117c46be4d',
   repo: 'MaxSCUT.github.io',
@@ -33,5 +33,5 @@ const gitalk = new Gitalk({
   labels: ['comments'],
   distractionFreeMode: true
 })
-gitalk.render('gitalk-container')
+comment.render('gitalk-container')
 </script>
