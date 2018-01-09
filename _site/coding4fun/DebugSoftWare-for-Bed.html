@@ -8,7 +8,7 @@
   <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
   <title>
     
-      About me &middot; Max's Blog
+      床垫调试器程序的设计 &middot; Max's Blog
     
   </title>
 
@@ -104,15 +104,106 @@
   
     <div class="container">
   <div class="row-fluid main">
-    <div class="content posts col-md-9">
-      <h1>About me</h1>
+    <div class="col-md-9 content">
+      <article class="post">
+        <h1 class="post-title">床垫调试器程序的设计</h1>
+
+        <div class="post-info">
+          <span class="post-date">10 Nov 2017</span>
+           | 
+            <span class="fa fa-folder-open" aria-hidden="true">
+            
+              <a class="post-categories" href="/categories.html#coding4fun">coding4fun</a>
+            
+            </span>
+          
+           | 
+            <span class="fa fa-tag" aria-hidden="true">
+            
+              <a class="post-tags" href="/tags.html#Qt">Qt</a>
+            
+              <a class="post-tags" href="/tags.html#Sketch">Sketch</a>
+            
+              <a class="post-tags" href="/tags.html#Software">Software</a>
+            
+            </span>
+          
+        </div>
+
+        <hr>
+        <div class="post-content">
+          <p>软件:QT5.9,Sketch<br />
+通讯方式:UDP<br />
+下位机:STM32控制器(UCOS)<br />
+<!-- more --></p>
+
+<p>看了很久的dribble大神的作品,终于有机会自己从UI设计开始一款软件了.这个软件的作用就是和下位机通讯,然后控制层叠起来的床垫机,取出和放入床垫.主要用在商场等场合.<br />
+软件登陆界面:<br />
+<img src="https://user-images.githubusercontent.com/2595085/34712703-b5cffd9e-f55e-11e7-86b3-cbfad310bda2.jpg" alt="login" />
+电子开关控制界面:<br />
+<img src="https://user-images.githubusercontent.com/2595085/34712701-b59f3dee-f55e-11e7-9964-938bc2448ba7.png" alt="switch" />
+电机控制界面:<br />
+<img src="https://user-images.githubusercontent.com/2595085/34712704-b60007dc-f55e-11e7-8457-47e5adbd83ed.png" alt="motor" />
+层高设置界面:<br />
+<img src="https://user-images.githubusercontent.com/2595085/34712705-b6326baa-f55e-11e7-895a-6bb25d1507be.png" alt="layerheight" />
+门挡高度设置界面:<br />
+<img src="https://user-images.githubusercontent.com/2595085/34712706-b662eb22-f55e-11e7-9314-3f738869b9f5.png" alt="doorheight" />
+出入库控制界面:<br />
+<img src="https://user-images.githubusercontent.com/2595085/34712709-b697a57e-f55e-11e7-927c-5896366a7e3e.png" alt="store" /></p>
+
+<p>参考资料:<br />
+[1]<a href="https://dribbble.com/">Dribbble</a><br />
+    -&gt;没有特定哪个,算是这里拿一点,那里取一点,再加点自己的想法做出来的UI界面.<br />
+[2]<a href="http://www.sketchcn.com/">Sketch中文网</a><br />
+    -&gt;入门Sketch的好去处<br />
+[3]<a href="http://doc.qt.io/">Qt Documentation</a><br />
+    -&gt;用别人的库还是看别人的help文档吧</p>
+
+        </div>
+        <br><br>
+      </article>
+
+      <nav class="post-pagination">
+        
+        <a href="/coding4fun/static-website-with-jekyll.html" class="btn previous" title="从WordPress到静态网站">&larr; 从WordPress到静态网站</a>
+        
+        
+        <a href="/boarddesign/Design-USBSTM-Board.html" class="btn next" title="USBSTM板的设计">USBSTM板的设计 &rarr;</a>
+        
+      </nav>
+
       <hr>
-      此人很懒，暂时啥也没写……:smile:<br>
 
-      Email: maxwell.lau@live.com <br><br>
+      
+      <aside class="related">
+        <h3>Related Posts</h3>
+        <ul class="related-posts">
+          
+            <li>
+              <a href="/coding4fun/USB-enumeration-process.html">
+                USB枚举过程分析
+                <small><time datetime="2017-12-21T19:29:00+08:00">21 Dec 2017</time></small>
+              </a>
+            </li>
+          
+            <li>
+              <a href="/coding4fun/RealTime-Test-on-Ubuntu.html">
+                Linux下的USB实时性测试
+                <small><time datetime="2017-12-18T19:29:00+08:00">18 Dec 2017</time></small>
+              </a>
+            </li>
+          
+            <li>
+              <a href="/boarddesign/Design-USBSTM-Board.html">
+                USBSTM板的设计
+                <small><time datetime="2017-12-17T19:29:00+08:00">17 Dec 2017</time></small>
+              </a>
+            </li>
+          
+        </ul>
+      </aside>
+      
 
-      感谢lszero的主题：<a href="https://github.com/lszero/zero-theme" target="_blank">zero-theme</a>
-      <br><br>
       <!-- Gitment
 <div id="container"></div>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
@@ -144,7 +235,7 @@ const comment = new Gitalk({
   repo: 'MaxSCUT.github.io',
   owner: 'MaxSCUT',
   admin: ['MaxSCUT'],
-  id: '',
+  id: '/coding4fun/DebugSoftWare-for-Bed',
   labels: ['comments'],
   distractionFreeMode: true
 })
@@ -152,146 +243,18 @@ comment.render('gitalk-container')
 </script>
 
     </div>
-
-    <div class="col-md-3 main-sidebar">
+    
+    <div class="col-md-3 post-sidebar">
       <div class="sidebar-content" id="sidebar">
-  <div class="author-avatar">
-    <img src="/assets/img/author_avatar.png" alt="lszero">
-  </div>
-
-  <div class="brief-intro">
-    <div class="author-name">
-      Max
-    </div>
-    <div class="author-bio">
-      技术宅|电子&软件爱好者
-
-    </div>
-  </div>
-
-  <nav class="site-state">
-    <div class="site-state-item">
-      <a href="/archives.html">
-        <span class="site-state-item-count">5</span>
-        <span>Posts</span>
-      </a>
-    </div>
-    <div class="site-state-item">
-      <a href="/categories.html">
-        <span class="site-state-item-count">2</span>
-        <span>Categories</span>
-      </a>
-    </div>
-    <div class="site-state-item">
-      <a href="/tags.html">
-        <span class="site-state-item-count">11</span>
-        <span>Tags</span>
-      </a>
-    </div>
-  </nav>
-
-  <div class="social-icons">
-    
-    <a href="https://github.com/maxscut" class="btn" title="Github" target="_blank"><i class="fa fa-fw fa-github fa-2x" aria-hidden="true"></i></a>
-    
-    
-    
-    
-    
-  </div>
-
-  <hr />
-
-  <nav class="category-list list-group">
-    <h3 class="sidebar-title">Categories</h3>
-    <ul class="list-group">
-    
-      <li class="list-group-item">
-        <a href="/categories.html#coding4fun">coding4fun</a>
-        <span class="badge">4</span>
-      </li>
-    
-      <li class="list-group-item">
-        <a href="/categories.html#boardDesign">boardDesign</a>
-        <span class="badge">1</span>
-      </li>
-    
+  <nav class="header-list-sidebar">
+    <ul id="sideNav" class="nav headers-sidenav">
+        <!-- code will be generated in TOC.js -->
     </ul>
   </nav>
-
-  <hr />
-
-  <nav class="tags-list">
-    <h3 class="sidebar-title">Tags</h3>
-    <ul class="list-group">
-    
-      <li class="list-group-item">
-        <a href="/tags.html#github"> github</a>
-        <span class="badge">1</span>
-      </li>
-    
-      <li class="list-group-item">
-        <a href="/tags.html#jekyll"> jekyll</a>
-        <span class="badge">1</span>
-      </li>
-    
-      <li class="list-group-item">
-        <a href="/tags.html#bootstrap"> bootstrap</a>
-        <span class="badge">1</span>
-      </li>
-    
-      <li class="list-group-item">
-        <a href="/tags.html#Qt"> Qt</a>
-        <span class="badge">1</span>
-      </li>
-    
-      <li class="list-group-item">
-        <a href="/tags.html#Sketch"> Sketch</a>
-        <span class="badge">1</span>
-      </li>
-    
-      <li class="list-group-item">
-        <a href="/tags.html#Software"> Software</a>
-        <span class="badge">3</span>
-      </li>
-    
-      <li class="list-group-item">
-        <a href="/tags.html#STM32"> STM32</a>
-        <span class="badge">1</span>
-      </li>
-    
-      <li class="list-group-item">
-        <a href="/tags.html#USB"> USB</a>
-        <span class="badge">1</span>
-      </li>
-    
-      <li class="list-group-item">
-        <a href="/tags.html#Hardware"> Hardware</a>
-        <span class="badge">1</span>
-      </li>
-    
-      <li class="list-group-item">
-        <a href="/tags.html#Linux"> Linux</a>
-        <span class="badge">1</span>
-      </li>
-    
-      <li class="list-group-item">
-        <a href="/tags.html#Embedded"> Embedded</a>
-        <span class="badge">1</span>
-      </li>
-    
-    </ul>
-  </nav>
-
-  <hr />
-
 </div>
-
-
     </div>
   </div>
 </div>
-
 
     <footer class="footer">
   <div class="copyright">
