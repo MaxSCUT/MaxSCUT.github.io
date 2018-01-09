@@ -254,9 +254,9 @@ sudo cyclictest -p 90 - m -c 0 -i 200 -n -h 100 -q -l 100000
 
 ```
 参考资料:
-[1][cyclictest 测试以及原理浅谈](http://blog.csdn.net/longerzone/article/details/16897655)
-[2][ubuntu打实时内核补丁（RT-PREEMPT kernel）](http://blog.csdn.net/x356982611/article/details/77370385)
-[3][Linux内核实时补丁PREEMPT_RT安装](http://blog.csdn.net/deng_sai/article/details/38080603)
-[4][Linux 实时性测试和实时补丁](http://blog.csdn.net/wzwind/article/details/50517619)
-[5][使用嵌入式 Linux 进行实时系统开发](http://www.eefocus.com/toradex/blog/16-12/401629_ecdf0.html)
-[6][ Ubuntu 14.04.05上安装xenomai 2.6.4实时核](http://blog.csdn.net/alanber14919/article/details/60327162)
+[1][cyclictest 测试以及原理浅谈](http://blog.csdn.net/longerzone/article/details/16897655)  
+[2][ubuntu打实时内核补丁（RT-PREEMPT kernel）](http://blog.csdn.net/x356982611/article/details/77370385)  
+[3][Linux内核实时补丁PREEMPT_RT安装](http://blog.csdn.net/deng_sai/article/details/38080603)  
+[4][Linux 实时性测试和实时补丁](http://blog.csdn.net/wzwind/article/details/50517619)  
+[5][使用嵌入式 Linux 进行实时系统开发](http://www.eefocus.com/toradex/blog/16-12/401629_ecdf0.html)  
+[6][ Ubuntu 14.04.05上安装xenomai 2.6.4实时核](http://blog.csdn.net/alanber14919/article/details/60327162)  
