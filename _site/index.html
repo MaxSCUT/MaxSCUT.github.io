@@ -147,108 +147,6 @@
       
       <article class="post-preview">
         <h1 class="post-title">
-          <a href="/coding4fun/comments-with-isso.html">搭建Isso评论服务</a>
-        </h1>
-
-        <div class="post-info">
-          <span class="post-date">09 Aug 2017</span>
-           | 
-            <span class="fa fa-folder-open" aria-hidden="true">
-            
-              <a class="post-categories" href="/categories.html#coding4fun">coding4fun</a>
-            
-            </span>
-          
-           | 
-            <span class="fa fa-tag" aria-hidden="true">
-            
-              <a class="post-tags" href="/tags.html#jekyll">jekyll</a>
-            
-              <a class="post-tags" href="/tags.html#blog">blog</a>
-            
-            </span>
-          
-        </div>
-
-        <div class="post-excerpt">
-          <p>与其借助第三方服务天天担心挂，还不如将自己的服务器资源利用起来。<a href="https://posativ.org/isso/">Isso</a>就是自建评论系统的一种方式。（官网需要fq.）</p>
-
-<h2 id="install-isso">Install Isso</h2>
-
-<p>测试自Ubuntu服务器。本来官网文档里没那么多戏，但是我一直报错。。又安了很多其它包。</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ sudo apt-get install python3-dev
-$ sudo pip install isso
-$ sudo apt-get install sqlite3
-
-# 可能需要：
-$ sudo pip install werkzeug
-$ sudo apt-get install libffi-dev
-$ sudo pip install misaka
-</code></pre></div></div>
-
-
-        </div>
-
-        <div class="post-readmore">
-          <a class="read-more" href="/coding4fun/comments-with-isso.html">Read More</a>
-        </div>
-      </article>
-      <hr />
-      
-      <article class="post-preview">
-        <h1 class="post-title">
-          <a href="/coding4fun/multisite-setting.html">利用Apache进行多站点配置</a>
-        </h1>
-
-        <div class="post-info">
-          <span class="post-date">08 Aug 2017</span>
-           | 
-            <span class="fa fa-folder-open" aria-hidden="true">
-            
-              <a class="post-categories" href="/categories.html#coding4fun">coding4fun</a>
-            
-            </span>
-          
-           | 
-            <span class="fa fa-tag" aria-hidden="true">
-            
-              <a class="post-tags" href="/tags.html#jekyll">jekyll</a>
-            
-              <a class="post-tags" href="/tags.html#blog">blog</a>
-            
-              <a class="post-tags" href="/tags.html#multisites">multisites</a>
-            
-            </span>
-          
-        </div>
-
-        <div class="post-excerpt">
-          <p>用了静态网页之后，主机就空闲了，当初辛辛苦苦跟工信部折腾了好几个月连案都备好了。。总感觉特别亏（其实就是舍不得wordpress的搜索功能。。）转念一想，拿wp当图片上传服务也是不错啊，这样就省去找第三方图床了。</p>
-
-<p>我的目标：</p>
-
-<ul>
-  <li>www.lszero.com 显示主页面。</li>
-  <li>blog.lszero.com 对应静态site。</li>
-  <li>wp.lszero.com 对应wordpress。</li>
-</ul>
-
-<p>我这里用的是apache来实现的，也可以用nginx。</p>
-
-<p>因为我的测试平台是Ubuntu，故跟网上的配置文件有些不一样。如网上说的apache配置文件<code class="highlighter-rouge">http.conf</code>，在我的平台下是<code class="highlighter-rouge">/etc/apache2/apache2.conf</code>。</p>
-
-
-        </div>
-
-        <div class="post-readmore">
-          <a class="read-more" href="/coding4fun/multisite-setting.html">Read More</a>
-        </div>
-      </article>
-      <hr />
-      
-      <article class="post-preview">
-        <h1 class="post-title">
           <a href="/coding4fun/static-website-with-jekyll.html">从WordPress到静态网站</a>
         </h1>
 
@@ -329,7 +227,7 @@ $ sudo pip install misaka
   <nav class="site-state">
     <div class="site-state-item">
       <a href="/archives.html">
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">2</span>
         <span>Posts</span>
       </a>
     </div>
@@ -341,7 +239,7 @@ $ sudo pip install misaka
     </div>
     <div class="site-state-item">
       <a href="/tags.html">
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">5</span>
         <span>Tags</span>
       </a>
     </div>
@@ -365,7 +263,7 @@ $ sudo pip install misaka
     
       <li class="list-group-item">
         <a href="/categories.html#coding4fun">coding4fun</a>
-        <span class="badge">4</span>
+        <span class="badge">2</span>
       </li>
     
     </ul>
@@ -384,21 +282,11 @@ $ sudo pip install misaka
     
       <li class="list-group-item">
         <a href="/tags.html#jekyll"> jekyll</a>
-        <span class="badge">3</span>
-      </li>
-    
-      <li class="list-group-item">
-        <a href="/tags.html#bootstrap"> bootstrap</a>
         <span class="badge">1</span>
       </li>
     
       <li class="list-group-item">
-        <a href="/tags.html#blog"> blog</a>
-        <span class="badge">2</span>
-      </li>
-    
-      <li class="list-group-item">
-        <a href="/tags.html#multisites"> multisites</a>
+        <a href="/tags.html#bootstrap"> bootstrap</a>
         <span class="badge">1</span>
       </li>
     
@@ -428,7 +316,7 @@ $ sudo pip install misaka
 
     <footer class="footer">
   <div class="copyright">
-      Copyright &copy; <time datetime="2018-01-09T12:03:50+08:00">2018</time> <a href="http://localhost:4000">Max</a> | Powered by <a href="https://github.com/jekyll/jekyll">Jekyll</a> | Designed by <a href="https://github.com/lszero/zero-theme">lszero</a>
+      Copyright &copy; <time datetime="2018-01-09T12:05:54+08:00">2018</time> <a href="http://localhost:4000">Max</a> | Powered by <a href="https://github.com/jekyll/jekyll">Jekyll</a> | Designed by <a href="https://github.com/lszero/zero-theme">lszero</a>
   </div>
   
 <script>
