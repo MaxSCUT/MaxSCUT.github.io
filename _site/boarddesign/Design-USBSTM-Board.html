@@ -8,7 +8,7 @@
   <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
   <title>
     
-      Categories &middot; Max's Blog
+      USBSTM板的设计 &middot; Max's Blog
     
   </title>
 
@@ -103,56 +103,139 @@
 
   
     <div class="container">
-  <div class="row">
-    <div class="col-md-8 col-md-offset-2">
-      <h1>Categories</h1>
+  <div class="row-fluid main">
+    <div class="col-md-9 content">
+      <article class="post">
+        <h1 class="post-title">USBSTM板的设计</h1>
+
+        <div class="post-info">
+          <span class="post-date">18 Dec 2017</span>
+           | 
+            <span class="fa fa-folder-open" aria-hidden="true">
+            
+              <a class="post-categories" href="/categories.html#boardDesign">boardDesign</a>
+            
+            </span>
+          
+           | 
+            <span class="fa fa-tag" aria-hidden="true">
+            
+              <a class="post-tags" href="/tags.html#STM32">STM32</a>
+            
+              <a class="post-tags" href="/tags.html#USB">USB</a>
+            
+              <a class="post-tags" href="/tags.html#Hardware">Hardware</a>
+            
+            </span>
+          
+        </div>
+
+        <hr>
+        <div class="post-content">
+          <p>软件:Altium Designer 18<br />
+主要芯片:STM32F407,USB3300<br />
+<img src="https://user-images.githubusercontent.com/2595085/34708921-f56d7706-f54f-11e7-8b79-1fcfb7c51910.png" alt="usbstm" /></p>
+
+<!-- more -->
+
+<p>基于STM32和USB3300设计了一款小的测试版,以后在别的地方(智能家居)可能会用到,故参照<a href="http://www.embed-net.com/thread-171-1-1.html">STM32F4xx+USB3300实现高速USB数据传输，单片机程序及PC驱动程序源码分享</a> 帖子的思路,用AD布了一块板.经过测试,读去数据的速度可以达到32MB/s.</p>
+
+        </div>
+        <br><br>
+      </article>
+
+      <nav class="post-pagination">
+        
+        <a href="/coding4fun/static-website-with-jekyll.html" class="btn previous" title="从WordPress到静态网站">&larr; 从WordPress到静态网站</a>
+        
+        
+        <a href="/coding4fun/RealTime-Test-on-Ubuntu.html" class="btn next" title="Linux下的USB实时性测试">Linux下的USB实时性测试 &rarr;</a>
+        
+      </nav>
+
+      <hr>
+
       
-      <div class="archive-cloud categories-cloud">
-        
-          <a href="#coding4fun" title="coding4fun" rel="3">coding4fun (3)</a>
-        
-          <a href="#boardDesign" title="boardDesign" rel="1">boardDesign (1)</a>
-        
-      </div>
-
-      <hr />
-
-      <div class="archive-posts-list category-posts-list">
-      
-        <span class="fa fa-book" aria-hidden="true" id="coding4fun">
-          <span class="text">coding4fun</span>
-        </span>
-
-        <ul class="posts-list">
-        
-          <li><a class="post-title" href="/coding4fun/USB-enumeration-process.html"><small class="post-date">2017-12-21</small>USB枚举过程分析</a></li>
+      <aside class="related">
+        <h3>Related Posts</h3>
+        <ul class="related-posts">
           
-        
-          <li><a class="post-title" href="/coding4fun/RealTime-Test-on-Ubuntu.html"><small class="post-date">2017-12-18</small>Linux下的USB实时性测试</a></li>
+            <li>
+              <a href="/coding4fun/USB-enumeration-process.html">
+                USB枚举过程分析
+                <small><time datetime="2017-12-21T19:29:00+08:00">21 Dec 2017</time></small>
+              </a>
+            </li>
           
-        
-          <li><a class="post-title" href="/coding4fun/static-website-with-jekyll.html"><small class="post-date">2017-08-01</small>从WordPress到静态网站</a></li>
+            <li>
+              <a href="/coding4fun/RealTime-Test-on-Ubuntu.html">
+                Linux下的USB实时性测试
+                <small><time datetime="2017-12-18T19:29:00+08:00">18 Dec 2017</time></small>
+              </a>
+            </li>
           
-        
+            <li>
+              <a href="/coding4fun/static-website-with-jekyll.html">
+                从WordPress到静态网站
+                <small><time datetime="2017-08-01T20:00:00+08:00">01 Aug 2017</time></small>
+              </a>
+            </li>
+          
         </ul>
+      </aside>
       
-        <span class="fa fa-book" aria-hidden="true" id="boardDesign">
-          <span class="text">boardDesign</span>
-        </span>
 
-        <ul class="posts-list">
-        
-          <li><a class="post-title" href="/boarddesign/Design-USBSTM-Board.html"><small class="post-date">2017-12-18</small>USBSTM板的设计</a></li>
-          
-        
-        </ul>
-      
-      </div>
+      <!-- Gitment
+<div id="container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script>
+const gitalk = new Gitalk({
+  clientID: 'fa2a4fb9c7575272096d',
+  clientSecret: '1fb0ce52ec9115f92eecf22efae3ed117c46be4d',
+  repo: 'github.com/MaxSCUT/MaxSCUT.github.io',
+  owner: 'max',
+  admin: ['MaxSCUT'],
+  // facebook-like distraction free mode
+  distractionFreeMode: false
+})
+
+gitalk.render('gitalk-container')
+</script> -->
+
+
+<link rel="stylesheet" href="/assets/comment/comment.css">
+<script src="/assets/comment/comment.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+const comment = new Gitalk({
+  clientID: 'fa2a4fb9c7575272096d',
+  clientSecret: '1fb0ce52ec9115f92eecf22efae3ed117c46be4d',
+  repo: 'MaxSCUT.github.io',
+  owner: 'MaxSCUT',
+  admin: ['MaxSCUT'],
+  id: '/boarddesign/Design-USBSTM-Board',
+  labels: ['comments'],
+  distractionFreeMode: true
+})
+comment.render('gitalk-container')
+</script>
+
+    </div>
+    
+    <div class="col-md-3 post-sidebar">
+      <div class="sidebar-content" id="sidebar">
+  <nav class="header-list-sidebar">
+    <ul id="sideNav" class="nav headers-sidenav">
+        <!-- code will be generated in TOC.js -->
+    </ul>
+  </nav>
+</div>
     </div>
   </div>
 </div>
-
-
 
     <footer class="footer">
   <div class="copyright">
