@@ -14,6 +14,7 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 title: Max's Blog
+tagline: 博学之明辨之
 subtitle: God does not play dice.
 author: max
 email: maxwell.lau@live.com
