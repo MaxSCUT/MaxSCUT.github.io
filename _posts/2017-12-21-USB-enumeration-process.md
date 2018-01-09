@@ -422,7 +422,7 @@ __ALIGN_BEGIN uint8_t USBD_CDC_CfgHSDesc[USB_CDC_CONFIG_DESC_SIZ] __ALIGN_END =
 ### 2.5 用Device Monitoring Studio查看设备描述符和配置描述符信息是否正确了.
 ### 2.6 编程,与设备进行通讯
 
-参考资料:
+参考资料:  
 [1][通过STM32CUbeMX建立USB HID的双向通讯实验成功](http://www.stmcu.org/module/forum/thread-611481-1-1.html)  
 [2][用STM32Cube简单实现自定义USB HID通信](https://www.amobbs.com/thread-5630510-1-1.html)  
 [3][STM32 USB HID 自定义设备 bulk 传输](https://www.cnblogs.com/heiyue/p/7230284.html)  
